@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/', function () {
-    return 'welcome' ;
+    return 'welcomedd' ;
 });
