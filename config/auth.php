@@ -33,6 +33,10 @@ return [
             'driver' => 'jwt',
             'provider' => 'admins',
         ],
+        'chef' => [
+            'driver' => 'jwt',
+            'provider' => 'chefs',
+        ],
     ],
 
     /*
@@ -61,6 +65,11 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+
+        'chefs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Chef::class,
         ],
 
         // 'users' => [
