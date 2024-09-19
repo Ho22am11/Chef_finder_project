@@ -9,6 +9,7 @@ use App\Models\User;
 use Dotenv\Validator as DotenvValidator;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 use App\Traits\ApiResponseTrait;
@@ -16,8 +17,9 @@ use App\Traits\ApiResponseTrait;
 class AuthController extends Controller
 {
     use ApiResponseTrait ;
-    try{
+    
         public function register(Request $request){
+            try{
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|between:2,100',
                 'email' => 'required|string|email|max:100|unique:users',
@@ -28,7 +30,6 @@ class AuthController extends Controller
                 return response()->json($validator->errors(), 400);
             }
         
-            // إنشاء المستخدم
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -44,12 +45,22 @@ class AuthController extends Controller
         
             return $this->ApiResponse($user , 'Chef successfully registered' , 201);
     
+        } catch(\Exception $e){
+            return response()->json([
+            'error' => 'Something went wrong',
+            'message' => $e->getMessage()], 500);
         }
     }
-    catch(\Exception $e){
-        return response()->json([
-        'error' => 'Something went wrong',
-        'message' => $e->getMessage()], 500);
+
+    public function logout(Request $request){
+
+        $token = $request ->header('auth-token') ;
+
+        JWTAuth::setToken($token)->invalidate();
+
+        return $this->ApiResponse( null , 'Logged out successfully' , 201);
+    
     }
+   
     
 }

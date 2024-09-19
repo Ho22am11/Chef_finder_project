@@ -23,6 +23,7 @@ Route::prefix('auth')->group(function(){
     Route::post('/register' , [ AuthController::class , 'register']);
 }); 
 
+Route::post('auth/logout' , [ AuthController::class , 'logout']);
 
 Route::get('/', function () {
     return 'welcome' ;
