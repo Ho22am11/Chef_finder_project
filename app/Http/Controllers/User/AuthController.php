@@ -61,6 +61,36 @@ class AuthController extends Controller
         return $this->ApiResponse( null , 'Logged out successfully' , 201);
     
     }
+
+    public function login(Request $request){
+
+        try{
+            $rules = [
+                "email" => "required",
+                "password" => "required"
+    
+            ];
+    
+            $validator = Validator::make($request->all(), $rules);
+    
+            $credentials = $request->only(['email', 'password']);
+    
+            $token = Auth::guard($request->guard_name)->attempt($credentials);
+    
+            $user = Auth::guard($request->guard_name)->user();
+    
+            $user->token = $token ;
+    
+            return $this->ApiResponse( $user , 'LOGIN successfully' , 201);
+
+        }catch(\Exception $e){
+            return response()->json([
+            'error' => 'Something went wrong',
+            'message' => $e->getMessage()], 500);
+        }
+
+        
+    }
    
     
 }
