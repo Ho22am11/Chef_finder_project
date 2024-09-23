@@ -19,12 +19,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('auth')->group(function(){
-    Route::post('/register' , [ AuthController::class , 'register']);
+Route::prefix('auth')->middleware(['api','auth.guard:user'])->group(function(){
+
+    Route::post('/logout' , [ AuthController::class , 'logout']);
 }); 
 
-Route::post('auth/logout' , [ AuthController::class , 'logout']);
+Route::post('auth/register' , [ AuthController::class , 'register']);
 Route::post('auth/login' , [ AuthController::class , 'login']);
+
+
 
 Route::get('/', function () {
     return 'welcome' ;

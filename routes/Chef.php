@@ -6,7 +6,7 @@ use App\Http\Controllers\Chef\AuthController;
 
 
 
-Route::prefix('auth')->group(function(){
+Route::prefix('auth')->middleware(['api','auth.guard:chef'])->group(function(){
     Route::post('/register' , [ AuthController::class , 'register']);
 }); 
 

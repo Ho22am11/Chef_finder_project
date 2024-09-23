@@ -19,8 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('auth')->group(function(){
-    Route::post('/register' , [ AuthController::class , 'register']);
+Route::post('/register' , [ AuthController::class , 'register']);
+Route::prefix('auth')->middleware(['api','auth.guard:admin'])->group(function(){
+    
+    Route::get('/test' , [ AuthController::class , 'test']);
 });
 
 

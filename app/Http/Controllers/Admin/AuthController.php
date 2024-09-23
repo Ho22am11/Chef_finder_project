@@ -34,8 +34,9 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
+            
     
-            $token = auth('admin')->attempt($request->only('email', 'password'));
+            $token = auth()->guard('admin')->attempt($request->only('email', 'password'));
             $admin->token = $token ;
     
             if (!$token) {
@@ -53,5 +54,10 @@ class AuthController extends Controller
         
         
 
+    }
+
+    public function test(Request $request){
+
+        return "test" ;
     }
 }
