@@ -23,6 +23,9 @@ class Chef extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'phone',
+        'gender',
+        'whats',
     ];
 
     /**
