@@ -62,4 +62,9 @@ class Chef extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function getGenderAttribute($value)
+    {
+        return $value ? 'male' : 'female';
+    }
 }

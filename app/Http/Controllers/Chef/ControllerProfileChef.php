@@ -28,7 +28,7 @@ class ControllerProfileChef extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
