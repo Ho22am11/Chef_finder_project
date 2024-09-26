@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LocationChef extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['chef_id' , 'longitude' , 'latitude'] ;
 }
