@@ -4,62 +4,41 @@ namespace App\Http\Controllers\Chef;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ProfileChef;
+use Illuminate\Support\Facades\Auth;
+
+use App\Traits\ApiResponseTrait;
 
 class ControllerProfileChef extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    use ApiResponseTrait ;
+  
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         
+        $modifiedRequest = $request->all();
+        $modifiedRequest['chef_id'] = 2; //auth()->user()->id 
+       $profile =  ProfileChef::create( $modifiedRequest);
+
+       return $this->ApiResponse($profile , 'store successfully profile' , 201);
+       
+    
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $profilechef = ProfileChef::where('chef_id' , $id)->get();
+        return $this->ApiResponse($profilechef , 'show successfully profile' , 201);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $profile = ProfileChef::find($id);
+        $profile->update($request->all());
+        return $this->ApiResponse($profile , 'update successfully profile' , 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
