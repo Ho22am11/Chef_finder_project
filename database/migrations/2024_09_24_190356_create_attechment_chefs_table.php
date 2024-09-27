@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attechment_chefs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('chef_id')->references('id')->on('chefs');
+            $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();;
             $table->timestamps();
         });
     }

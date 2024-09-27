@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('Twitter')->nullable();
             $table->text('youtube')->nullable();
             $table->text('linkedin')->nullable();
-            $table->foreignId('chef_id')->references('id')->on('chefs')->nullable();
+            $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();;
             $table->timestamps();
         });
     }

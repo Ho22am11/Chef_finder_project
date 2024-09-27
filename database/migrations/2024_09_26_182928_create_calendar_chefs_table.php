@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('location_chefs', function (Blueprint $table) {
+        Schema::create('calendar_chefs', function (Blueprint $table) {
             $table->id();
-            $table->decimal('latitude' , 10 , 8);
-            $table->decimal('longitude' , 11 , 8);
+            $table->date('day');
+            $table->boolean('day_aval')->nullable()->default(true);
+            $table->boolean('breakfast')->default(true);  
+            $table->boolean('lunch')->default(true);      
+            $table->boolean('dinner')->default(true); 
             $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('location_chefs');
+        Schema::dropIfExists('calendar_chefs');
     }
 };
