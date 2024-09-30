@@ -13,6 +13,7 @@ Route::middleware(['api','auth.guard:chef'])->namespace('App\Http\Controllers\Ch
     Route::resource('calendars' , ControllerCalendarChef::class);
     Route::resource('payments' , ControllerPaymentChef::class);
     Route::resource('menus' , ControllerMenusChef::class);
+    Route::resource('dishes' , ControllerDisheChef::class);
 }); 
 
 Route::post('/register' , [ AuthController::class , 'register']);
