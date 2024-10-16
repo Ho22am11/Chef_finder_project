@@ -56,8 +56,5 @@ class AuthController extends Controller
 
     }
 
-    public function test(Request $request){
-
-        return "test" ;
-    }
+   
 }

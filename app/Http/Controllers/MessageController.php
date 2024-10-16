@@ -11,6 +11,7 @@ class MessageController extends Controller
 {
     public function send(Request $request)
     {
+        try{
             $message = Message::create([
                 'sender_id' => 1 ,
                 'sender_type' => $request->sender_type ,
@@ -22,6 +23,11 @@ class MessageController extends Controller
          broadcast(new MessageSent($message))->toOthers();
 
          return response()->json(['status' => 'Message Sent!']);
+        }catch(\Exception $e){
+            return response()->json([
+            'error' => 'Something went wrong',
+            'message' => $e->getMessage()], 500);
+        }
     }
 
 }
