@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('meal');
             $table->date('day');
             $table->string('Packages');
-            $table->string('Additional_service');
+            $table->string('Additional_service'); 
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('chef_id')->nullable()->references('id')->on('chefs')->nullOnDelete();
             $table->timestamps();

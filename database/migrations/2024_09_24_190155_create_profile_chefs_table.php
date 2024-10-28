@@ -13,21 +13,22 @@ return new class extends Migration
     {
         Schema::create('profile_chefs', function (Blueprint $table) {
             $table->id();
-            $table->string('f_name')->nullable();
-            $table->string('l_name')->nullable();
+            $table->string('f_name');
+            $table->string('l_name');
+            $table->string('img');
             $table->text('BIO')->nullable();
-            $table->json('lang')->nullable();
+            $table->json('language')->nullable();
             $table->text('about')->nullable();
             $table->text('experience')->nullable();
             $table->text('learned_at')->nullable();
-            $table->text('guides')->nullable();
-            $table->text('web')->nullable();
-            $table->text('face')->nullable();
-            $table->text('insta')->nullable();
+            $table->text('tips')->nullable();
+            $table->string('web')->nullable();
+            $table->string('facebook')->nullable();
+            $table->text('instagram')->nullable();
             $table->text('Twitter')->nullable();
             $table->text('youtube')->nullable();
             $table->text('linkedin')->nullable();
-            $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();;
+            $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();
             $table->timestamps();
         });
     }
