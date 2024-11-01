@@ -23,6 +23,9 @@ class Chef extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'phone',
+        'gender',
+        'whats',
     ];
 
     /**
@@ -58,5 +61,10 @@ class Chef extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getGenderAttribute($value)
+    {
+        return $value ? 'male' : 'female';
     }
 }

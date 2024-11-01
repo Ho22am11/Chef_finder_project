@@ -2,13 +2,21 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Chef\AuthController;
+use App\Http\Controllers\Chef\AuthController ;
 
 
 
-Route::prefix('auth')->middleware(['api','auth.guard:chef'])->group(function(){
-    Route::post('/register' , [ AuthController::class , 'register']);
+
+Route::middleware(['api','auth.guard:chef'])->namespace('App\Http\Controllers\Chef')->group(function(){
+    Route::resource('profiles' , ControllerProfileChef::class);
+    Route::resource('loctions' , ControllerLoctionChef::class);
+    Route::resource('calendars' , ControllerCalendarChef::class);
+    Route::resource('payments' , ControllerPaymentChef::class);
+    Route::resource('menus' , ControllerMenusChef::class);
+    Route::resource('dishes' , ControllerDisheChef::class);
 }); 
+
+Route::post('/register' , [ AuthController::class , 'register']);
 
 Route::get('/', function () {
     return 'welcomedd' ;

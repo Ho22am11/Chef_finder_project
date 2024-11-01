@@ -23,6 +23,7 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|between:2,100',
                 'email' => 'required|string|email|max:100|unique:users',
+                'phone' => 'required|string|min:10|max:15',
                 'password' => 'required|string|min:6',
             ]);
         
@@ -33,17 +34,20 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'password' => bcrypt($request->password),
             ]);
     
-            $token = auth()->guard('api')->attempt($request->only('email', 'password'));
+            $token = auth()->guard('user')->attempt($request->only('email', 'password'));
             $user->token = $token ;
     
             if (!$token) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
         
-            return $this->ApiResponse($user , 'Chef successfully registered' , 201);
+            return $this->ApiResponse($user , 'User successfully registered' , 201);
     
         } catch(\Exception $e){
             return response()->json([
@@ -66,20 +70,37 @@ class AuthController extends Controller
 
         try{
             $rules = [
-                "email" => "required",
-                "password" => "required"
+                "login" => "required",
+                "password" => "required" ,
+                
     
             ];
     
             $validator = Validator::make($request->all(), $rules);
+
+
+            $login = $request->login;
+            $password = $request->password;
+
+
+            if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+                
+                $credentials = ['email' => $login, 'password' => $password];
+            } else {
+               
+                $credentials = ['phone' => $login, 'password' => $password];
+            }
     
-            $credentials = $request->only(['email', 'password']);
     
             $token = Auth::guard($request->guard_name)->attempt($credentials);
     
+            if (!$token) {
+                return response()->json(['error' => 'Unauthorized. Invalid credentials'], 401);
+            }
+
             $user = Auth::guard($request->guard_name)->user();
-    
-            $user->token = $token ;
+
+            $user->token = $token;
     
             return $this->ApiResponse( $user , 'LOGIN successfully' , 201);
 

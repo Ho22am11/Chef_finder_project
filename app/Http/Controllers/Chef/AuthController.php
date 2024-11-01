@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Chef;
+use App\Models\AttechmentChef;
 use Dotenv\Validator as DotenvValidator;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Validator;
@@ -28,12 +29,34 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
+
+            $request->except('name' , 'email' , 'password') ;
         
             $chef = Chef::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
+                'whats' => $request->whats,
+                'gender' => $request->gender,
                 'password' => bcrypt($request->password),
             ]);
+            $files = ['cv', 'passport']; 
+
+foreach ($files as $file) {
+    if ($request->hasFile($file)) {
+        $uploadedFile = $request->file($file);
+
+        $fileName = time() . "_$file." . $uploadedFile->getClientOriginalExtension();
+
+        $path = "chefs/$file";
+        $uploadedFile->storeAs($path, $fileName, 'attechment');
+
+        AttechmentChef::create([
+            'name' => "$path/$fileName",
+            'chef_id' => $chef->id,
+        ]);
+    }
+}
     
     
     

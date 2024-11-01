@@ -19,9 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('auth')->middleware(['api','auth.guard:user'])->group(function(){
+Route::middleware(['api','auth.guard:user'])->namespace('App\Http\Controllers\User')->group(function(){
 
     Route::post('/logout' , [ AuthController::class , 'logout']);
+    Route::resource('orders' , ControllerOrder::class);
 }); 
 
 Route::post('auth/register' , [ AuthController::class , 'register']);
