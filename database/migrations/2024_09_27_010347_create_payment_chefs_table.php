@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('account_type');      
             $table->string('account_number');    
             $table->string('swift_number')->nullable();   
-            $table->string('account_branch')->nullable(); 
+            $table->string('account_branch')->nullable();    
             $table->string('iban')->nullable();
             $table->foreignId('chef_id')->references('id')->on('chefs')->cascadeOnDelete();
             $table->timestamps();

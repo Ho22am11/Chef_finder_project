@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('calendar_chefs', function (Blueprint $table) {
             $table->id();
             $table->date('day');
-            $table->boolean('day_aval')->nullable()->default(true);
+            $table->boolean('available')->nullable()->default(true);
             $table->boolean('breakfast')->default(true);  
             $table->boolean('lunch')->default(true);      
             $table->boolean('dinner')->default(true); 

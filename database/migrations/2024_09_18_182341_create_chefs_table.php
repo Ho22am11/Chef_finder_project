@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('chefs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('phone');
             $table->string('whats');
             $table->boolean('gender')->nullable();

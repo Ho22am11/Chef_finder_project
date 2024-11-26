@@ -15,6 +15,7 @@ class ControllerMenusChef extends Controller
 
     public function store(Request $request)
     {
+        try{
         $inputData = $request->except('menus');
         $inputData['chef_id'] = 2 ;
 
@@ -27,18 +28,30 @@ class ControllerMenusChef extends Controller
         }
 
         return $this->ApiResponse($menuData , 'store successfully menu' , 201);
+    }catch(\Exception $e){
+        return response()->json([
+        'error' => 'Something went wrong',
+        'message' => $e->getMessage()], 500);
+    }
 
     }
 
     public function show($id)
     {
+        try{
         $menu = MenusChef::where('chef_id' , $id)->with('plates')->get() ; // error relation
         return $this->ApiResponse($menu , 'show successfully menu' , 201);
+    }catch(\Exception $e){
+        return response()->json([
+        'error' => 'Something went wrong',
+        'message' => $e->getMessage()], 500);
+    }
         
     }
 
     public function update(Request $request , $id)
     {
+        try{
         $menuData = MenusChef::findOrfail($id);
         $inputData = $request->except('menus');
         $menuData->update($inputData);
@@ -69,6 +82,11 @@ class ControllerMenusChef extends Controller
         }
        
         return $this->ApiResponse($menuData , 'update successfully menu' , 201);
+      }catch(\Exception $e){
+        return response()->json([
+        'error' => 'Something went wrong',
+        'message' => $e->getMessage()], 500);
+    }
         
     }
 
